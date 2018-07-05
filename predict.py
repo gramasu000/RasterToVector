@@ -16,7 +16,7 @@ import numpy as np
 import tensorflow
 from tensorflow import keras
 import h5py
-from PIL import Image
+import matplotlib.image as mpimg 
 import matplotlib.pyplot as plt
 import floorplan_utils as fp_ut
 """ }}} """
@@ -85,11 +85,11 @@ modelHeatMap = keras.models.Model(inputShape, modelHeatMap)
 # image.save(opt.outputFilename .. '.png', representationImage)
 
 """ PYTHON """
-floorplan = np.array(Image.open(opt.floorplanFilename))
+floorplan = np.array(mpimg.imread(opt.floorplanFilename)) 
 representationPrediction = fp_ut.invertFloorplan(modelHeatmap, floorplan)
 representationImage = fp_ut.drawRepresentationImage(floorplan, representationPrediction)
 fp_ut.saveRepresentation("{}.txt".format(opt.outputFilename), representationPrediction)
 fp_ut.writePopupData(floorplan.shape[2], floorplan.shape[1], representationPrediction, "{}_popup".format(opt.outputFilename), representationPrediction)
-Image # save method
+mpimg.imsave(fname="{}.png".format(opt.outputFilename), arr=representationImage)
 
 """ }}} """
